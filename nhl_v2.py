@@ -1,12 +1,6 @@
-
 # NHL - Predicting the value of players (salary)
 
-
-
 ##Import data
-
-from google.colab import drive
-drive.mount('/content/drive')
 
 import pandas as pd
 import numpy as np
@@ -14,9 +8,10 @@ import matplotlib.pyplot as plt
 import statsmodels.api as sm
 from sklearn.metrics import mean_squared_error
 from math import sqrt
+from sklearn.ensemble import RandomForestRegressor
 
 #import data
-nhl = pd.read_excel("/content/drive/MyDrive/Python Gruppenarbeit NHL/NHL data.xlsx")
+nhl = pd.read_excel("NHL data.xlsx")
 nhl.info()
 
 ##Prepare data
@@ -114,7 +109,6 @@ nhl["GF/GP"] = nhl["GF"]/nhl["GP"]
 #adding goals allowed while this player was on the ice
 nhl["GA/GP"] = nhl["GA"]/nhl["GP"]
 
-
 #overview of the dataframe
 nhl.info
 
@@ -149,61 +143,9 @@ del nhlSalaryPrediction['iFF/GP']
 nhlSalaryPrediction = pd.get_dummies(nhlSalaryPrediction, columns=['Hand'], drop_first=True)
 nhlSalaryPrediction = pd.get_dummies(nhlSalaryPrediction, columns=['Position'], drop_first=True)
 
-##Linerar regression
+##RANDOM FOREST model (on log salary)
 
-#Determine number of instances and variables
-nhlSalaryPrediction.shape
-
-#Determine separating instance for training (70%) and test (30%) dataset
-nhlSalaryPrediction.shape
-n = nhlSalaryPrediction.shape[0]
-instance = round(n*0.7, 0)
-instance
-
-#Create training and test data set
-nhl_train = nhlSalaryPrediction.loc[0:instance,:]
-nhl_test = nhlSalaryPrediction.loc[instance+1:,:]
-
-#checking training data
-nhl_train
-
-#Linear regression model to predict the salary
-y = nhl_train["Salary"]
-X = nhl_train.loc[:, nhl_train.columns != 'Salary']
-X = sm.add_constant(X, prepend=False)
-model_Salary  = sm.OLS(y, X)
-model_Salary = model_Salary.fit()
-print(model_Salary.summary())
-
-#Predicting the salary for the test dataset
-y_test = nhl_test["Salary"]
-X_test = nhl_test.loc[:, nhl_test.columns != 'Salary']
-
-X_test = sm.add_constant(X_test, prepend=False)
-prediction_Salary_test = model_Salary.predict(X_test)
-prediction_Salary_test
-
-#calculate RMSE
-sqrt(mean_squared_error(y_test, prediction_Salary_test)) 
-
-#Creating an Actual vs. Predicted Plot
-def actual_vs_predicted_plot(y_test, prediction_Salary_test):
-  min_value=np.array([y_test.min(), prediction_Salary_test.min()]).min()
-  max_value=np.array([y_test.max(), prediction_Salary_test.max()]).max()
-  fig, ax = plt.subplots(figsize=(10,5))
-  ax.scatter(y_test,prediction_Salary_test, color="blue")
-  ax.plot([min_value,max_value], [min_value, max_value], lw=4, color="green")
-  ax.set_title("Actual vs Predicted Plot")
-  ax.set_xlabel('Actual')
-  ax.set_ylabel('Predicted')
-  plt.show()
-
-#Displaying Actual vs. Predicted Plot
-actual_vs_predicted_plot(y_test, prediction_Salary_test)
-
-##Linear regression with RANDOM FOREST model (on log salary)
-
-#Create a variable for the logarytmized salary
+#Create a variable for the logarithmized salary
 nhlSalaryPrediction_log = nhlSalaryPrediction.copy()
 nhlSalaryPrediction_log["logSalary"] = np.log(nhlSalaryPrediction["Salary"])
 del nhlSalaryPrediction_log["Salary"]
@@ -251,23 +193,6 @@ def actual_vs_predicted_plot(y_test, prediction_Salary_test):
 
 #Displaying Actual vs. Predicted Plot
 actual_vs_predicted_plot(y_test, predictions_Salary_with_log)
-
-##Comparison of the two models
-
-Summary of Results
-
-|Model|RMSE|R-squared|
-|--|--|--|
-|Linear regression|1879149.1983700546|0.709|
-|Linear regression with logarythmic salary|1854443.3967667823|0.710|
-
-The model should not predict negative wages -> We will use the model with logarithmic wages for predicting player values. Also, this model has a slightly higher R squared value and a lower RMSE.
-
-#checking smallest predicted salaries for first model (Linear Regression)
-predictions_Salary_with_log.nsmallest(5)
-
-#checking smallest predicted salaries for second model (Linear regression with logarythmic salary)
-prediction_Salary_test.nsmallest(5)
 
 ##Determine the effective values of the players (wages they should receive based on their statistics)
 
