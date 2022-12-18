@@ -1,9 +1,10 @@
 # HSG-Python-Project
 Programming with Advanced Computer Languages Group Project
 
+
 Description
 
-Use NHL players data set to build a model (e.g. multivariate regression) in Python based on which we try to predict the player's salary (as a proxy for the player's value) based on some regressors we choose from the data set. This provides the basis for a "scouting program" that users can basically query like a database.
+Use NHL players data set to build a model (e.g. multivariate regression) in Python based on which we predict the player's salary (as a proxy for the player's value) based on some regressors we choose from the data set. This provides the basis for a "scouting program" that users can basically query like a database. The goal is to help NHL scouts understand the effective value of players. Through the data-based determination of player values, under and overpaid players can be identified.
 
 
 Requirements (still partially tbd)
@@ -19,6 +20,18 @@ Requirements (still partially tbd)
 - Outputs delivered according to the entered filters ordered according to one certain filter (for example showing the most underpaid players first).
 
 - Need a code for filtering strings (name), one for different categories (position, hand, etc.), one for integers (age, stats, etc.) and then maybe something to order integers.
+
+
+Data processing:
+
+To predict the value of the players we use data from Hockey Abstract. The consolidated dataset we downloaded from Kaggle (Owner: Cam Nugent).
+
+Hockey Abstract: http://www.hockeyabstract.com
+Kaggle (Cam Nugent): https://www.kaggle.com/datasets/camnugent/predict-nhl-player-salaries
+
+The dataset contains 154 different statistics (including salary) for 874 NHL players during the 2016/2017 season. For the description of the different statistics listed in the dataset, please refer to the document "Dataset Column Legend".
+
+In order to make the statistics comparable, 25 additional columns were added to the 154 existing ones. The values within the added columns are based on calculations performed on the existing data in the initial columns. For example, the absolute goals scored were extended by the goals scored per game played. For the creation of the value prediction model, 23 columns were determined, which have a direct connection to the specific player, influence the prediction of the player's value, and does not have a correlation of more than 0.7 with other selected columns. The wages were logrythmized and the dataset split into a training (75%) and a test dataset (25%) to optimize the prediction of the players' values.
 
 
 Choice of Regression Model:
