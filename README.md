@@ -27,6 +27,7 @@ Data processing:
 To predict the value of the players we use data from Hockey Abstract. The consolidated dataset we downloaded from Kaggle (Owner: Cam Nugent).
 
 Hockey Abstract: http://www.hockeyabstract.com
+
 Kaggle (Cam Nugent): https://www.kaggle.com/datasets/camnugent/predict-nhl-player-salaries
 
 The dataset contains 154 different statistics (including salary) for 874 NHL players during the 2016/2017 season. For the description of the different statistics listed in the dataset, please refer to the document "Dataset Column Legend".
