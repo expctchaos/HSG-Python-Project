@@ -2,24 +2,40 @@
 Programming with Advanced Computer Languages Group Project
 
 
-Description
+Short Description:
 
-Use NHL players data set to build a model (e.g. multivariate regression) in Python based on which we predict the player's salary (as a proxy for the player's value) based on some regressors we choose from the data set. This provides the basis for a "scouting program" that users can basically query like a database. The goal is to help NHL scouts understand the effective value of players. Through the data-based determination of player values, under and overpaid players can be identified.
+Use NHL players data set to build a model (e.g. multivariate regression or machine learning) in Python, based on which we predict the player's salary (as a proxy for the player's value). The analysis is  based on independent variables we choose from a data set retrieved from Kaggle. The prediction model provides the basis for a "scouting program" that lets users query values for player names. The goal is to help NHL scouts understand the effective value of players. oreover, the data-based determination of player values should enable scouts to identify under and overpaid players.
 
 
-Requirements (still partially tbd)
+Program Requirements:
 
-- Let user's query for a player name with the output being the value that the program computes based on stats, their actual salary and the % difference between the two (over/undervalued).
+The program should let users query for a player name with the output being the actual salary they earn, the value of the player predicted by the model (as a salary value) and the % difference between the two (to indicate if the player is over/undervalued).
 
-- Let users input certain variables (e.g. age, goals scored, etc) and our program outputs the value for such a player. 
+Hence, the program needs two parts:
 
-- Filter for a players name to then see his value (including under/overpayed). 
+- Reading Data / Predicting Values: Regression or machine learning model based on the data set that is fed into the program. The model should be able to capture complex interactions, account for non-linear relationships in the data set and not be prone to overfitting.
 
-- Combine it also with other filters (age, team, position, certain stats, etc.).
+- User Interface to input Player Name: Simple UI with text input field where user enters the full name (first name + last name) of the player they want to analyze. For each query, the output interface should display player values (actual vs. predicted) and the difference.
 
-- Outputs delivered according to the entered filters ordered according to one certain filter (for example showing the most underpaid players first).
 
-- Need a code for filtering strings (name), one for different categories (position, hand, etc.), one for integers (age, stats, etc.) and then maybe something to order integers.
+User Instructions:
+
+1) Download & install Anaconda Navigator
+
+2) Start Anaconda Navigator & launch Jupyter Notebook
+
+3) Open the Notebook Final Value Search.ipynb from the repository or copy the code to a new Notebook
+
+4) Run the code to upload & read the data
+
+5) Run the code for the scouting program (user interface)
+
+6) in the pop-up window, enter a player name in the following format: FIRST NAME + LAST NAME
+
+7) Submit & results should be displayed on-screen
+
+
+In-Depth Project Description & Model Explanation:
 
 
 Data processing:
